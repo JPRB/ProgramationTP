@@ -30,7 +30,7 @@ void MostraCarros(Carro carro[], int tam);
 
 
 
-void UpdateFileCarros();
+int SaveCarros(Carro carros[], int tam);
 
 
 #endif /* Carro_H */

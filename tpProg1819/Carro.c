@@ -51,17 +51,17 @@ Carro* ReadCarros(int *tam) {
 Carro* AdicionaCarro(Carro carros[], Carro newCarro, int *tam) {
     Carro *aux;
     int new_size = (*tam + 1);
-    
+
     aux = realloc(carros, new_size * sizeof (Carro));
-    
+
     if (aux == NULL)
         return carros;
 
     carros = aux;
-    
+
     //incrementar o tamanho
     (*tam)++;
-     //Associar novo carro para o array de Carros
+    //Associar novo carro para o array de Carros
     carros[*tam - 1] = newCarro;
 
     return carros;
@@ -69,13 +69,39 @@ Carro* AdicionaCarro(Carro carros[], Carro newCarro, int *tam) {
 
 void MostraCarros(Carro *carro, int tam) {
 
-    for (int i = 0; i < tam; i++)
-        printf("Id: %d \t Potência: %d \t Avariado: %d \n",
+    printf("+------+-----------+-----------+\n"
+            "|  ID  | Potência |  Avariado |\n"
+            "+------+-----------+-----------+\n");
+    for (int i = 0; i < tam; i++) {
+        printf("| %-4d | %-9d | %-9d |\n",
                 carro[i].id, carro[i].potencia, carro[i].avariado);
-    
+    }
+
+    printf("+------+-----------+-----------+\n");
+    getchar();
+    getchar();
 }
 
-void UpdateFileCarros() {
+int SaveCarros(Carro carros[], int tam) {
+
+     FILE *fcarros;
+    Carro *c;
+
+    fcarros = fopen("CarrosTest.txt", "w");
 
 
+    if (fcarros == NULL) {
+        printf("Erro no acesso ao ficheiro\n");
+        //*tam = 0;
+        return -1;
+    }
+
+    for (c = carros; c < (carros + tam); c++) {
+        fprintf(fcarros, "%d  %d  %d\n\n", c->id, c->potencia, c->avariado);
+    }
+
+
+    fclose(fcarros);
+
+    return 0;
 }

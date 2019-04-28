@@ -46,7 +46,7 @@ Piloto *AdicionaPiloto(Piloto pilotos[], Piloto newPiloto, int *tam);
 
 
 
-void SavePilotos();
+int SavePilotos(Piloto pilotos[], int tam);
 
 
 
@@ -82,6 +82,9 @@ int GetImpedimento(int valorImpedimento, int idPiloto);
  * @param totalPilotos - Total de Pilotos
  */
 void SetImpedimento(Piloto *piloto, int valorImpedimento, int idPiloto, int totalPilotos);
+
+
+
 
 Piloto *GetPiloto(Piloto *piloto, int idPiloto, int totalPilotos);
 
