@@ -9,183 +9,197 @@
 #include <stdlib.h>
 #include "Piloto.h"
 #include "Carro.h"
+#include "Corrida.h"
 
 #include <locale.h>
 
-typedef struct {
-    Piloto *pilotos;
-    Carro *carros;
-    int tamPilotos;
-    int tamCarros;
-
-} Karts;
-
-void ExitProgram() {
-    printf("Erro ao Carregar informação");
-    exit(EXIT_FAILURE);
-}
-
-Karts ReadProgram() {
-    Karts k;
-
-    k.pilotos = ReadPilotos(&k.tamPilotos);
-    k.carros = ReadCarros(&k.tamCarros);
-
-    if (k.pilotos == NULL || k.carros == NULL) {
-        ExitProgram();
-    }
-
-    return k;
-}
-
-
-
-void menuPiloto(Piloto *p) {
-    int tam = 0;
+void menuPiloto(Piloto *p, int tam)
+{
     char *op[] = {"Mostrar Pilotos", "Voltar"};
-    int opcoes = (sizeof (op) / sizeof (op[0])), val;
+    int opcoes = (sizeof(op) / sizeof(op[0])), val;
 
     int voltar = 1;
 
-        p = ReadPilotos(&tam);
-    
-        if (p == NULL)
-        {
-            ExitProgram();
-        }
-
-    while (voltar) {
-        //        system("cls");
+    while (voltar)
+    {
+        //        clear();
         printf("----------------menuPiloto-------------\n\n");
-        for (int i = 0; i < opcoes; i++) {
-            printf("%d - %s \n", i + 1, *(op + i));
-        }
-
-        do {
-            printf("\nEscolha uma opção do menu: ");
-            scanf("%d", &val) == 1;
-
-        } while (val > opcoes || val <= 0);
-
-        switch (val) {
-            case 1:
-                system("cls");
-                MostraPilotos(p, tam);
-                break;
-
-            case 2:
-                voltar = 0;
-                break;
-        }
-    }
-
-    //SetImpedimento(p, 3, 15, tam);
-
-    //SavePilotos(p, tam);
-}
-
-void menuCarro(Carro *c) {
-    int tam = 0;
-    char *op[] = {"Mostrar Carros", "Voltar"};
-    int opcoes = (sizeof (op) / sizeof (op[0])), val;
-
-    int voltar = 1;
-
-        c = ReadCarros(&tam);
-    
-        if (c == NULL)
+        for (int i = 0; i < opcoes; i++)
         {
-            ExitProgram();
+            printf(" %d - %s \n", i + 1, *(op + i));
         }
 
-    while (voltar) {
-        printf("+---------------menuCarro-------------+\n");
-
-        for (int i = 0; i < opcoes; i++) {
-            printf("%d - %s \n", i + 1, *(op + i));
-        }
-
-        do {
-            printf("\nEscolha uma opção do menu: ");
-            scanf("%d", &val) == 1;
+        do
+        {
+            printf("\n Escolha uma opção do menu: ");
+            val = readInt();
 
         } while (val > opcoes || val <= 0);
 
-        switch (val) {
-            case 1:
-                system("cls");
-                MostraCarros(c, tam);
-                break;
-
-            case 2:
-                voltar = 0;
-                break;
-        }
-    }
-}
-
-void menuCorridas() {
-}
-
-int SaveData(Karts k) {
-    int savePilotos, saveCarros, saveCorrida;
-
-    savePilotos = SavePilotos(k.pilotos, k.tamPilotos);
-
-    saveCarros = SaveCarros(k.carros, k.tamCarros);
-}
-
-void menu(Piloto *pilotos, Carro *carro) {
-
-    char *op[] = {"Menu Pilotos", "Menu Carros", "Menu Corridas", "Modo Campeonato", "Exit"};
-    int val, valid;
-
-    for (int i = 0; i < (sizeof (op) / sizeof (op[0])); i++) {
-        printf("%d - %s \n", i + 1, *(op + i));
-    }
-
-    do {
-        printf("\nEscolha uma opção do menu: ");
-        scanf("%d", &val) == 1;
-
-    } while (val > 4 || val <= 0);
-
-    switch (val) {
+        switch (val)
+        {
         case 1:
-            system("cls");
-            menuPiloto(pilotos);
+            clear();
+            MostraPilotos(p, tam);
             break;
 
         case 2:
-            system("cls");
-            menuCarro(carro);
+            voltar = 0;
             break;
-
-        case 3:
-            menuCorridas();
-            break;
-
-        case 4:
-            exit(0);
-            break;
-
-        default:
-            menu(pilotos, carro);
+        }
     }
 }
 
-int main(int argc, char **argv) {
+void menuCarro(Carro *c, int tam)
+{
+    char *op[] = {"Mostrar Carros", "Voltar"};
+    int opcoes = (sizeof(op) / sizeof(op[0])), val;
+
+    int voltar = 1;
+
+    while (voltar)
+    {
+        printf("+---------------menuCarro-------------+\n");
+
+        for (int i = 0; i < opcoes; i++)
+        {
+            printf(" %d - %s \n", i + 1, *(op + i));
+        }
+
+        do
+        {
+            printf("\n Escolha uma opção do menu: ");
+            val = readInt();
+
+        } while (val > opcoes || val <= 0);
+
+        switch (val)
+        {
+        case 1:
+            clear();
+            MostraCarros(c, tam);
+            break;
+
+        case 2:
+            voltar = 0;
+            break;
+        }
+    }
+}
+
+void menuCorridas(Piloto *pilotos, Carro *carros, int tamPiloto, int tamCarro)
+{
+    int nVoltas, compPista, nCarros;
+    int val;
+
+    int voltar = 1;
+
+    Corredor *corrida;
+    while (voltar)
+    {
+        clear();
+        printf("+--------------- Corrida Individual -------------+\n\n");
+
+        printf(" 1 - Criar Novo Corrida Individual \n");
+        printf(" 2 - Ver Raking total \n");
+        printf(" 3 - Ver Raking por volta \n");
+        printf(" 4 - Voltar\n");
+        do
+        {
+            printf("\n Escolha uma opc do menu: ");
+            val = readInt();
+
+        } while (val > 4 || val <= 0);
+
+        switch (val)
+        {
+        case 1:
+
+            CriaCorrida(&nVoltas, &compPista, &nCarros);
+            corrida = AtribuiCorredores(&pilotos, &carros, tamPiloto, tamCarro, nCarros);
+            
+            break;
+
+        case 2:
+            break;
+            
+        case 3:
+            break;
+
+        case 4:
+            voltar = 0;
+            break;
+        }
+    }
+}
+
+void menu(Piloto *pilotos, Carro *carros, int tamPiloto, int tamCarro)
+{
+
+    char *op[] = {"Menu Pilotos", "Menu Carros", "Menu Corridas", "Modo Campeonato", "Exit"};
+    int val, valid, n_op = (sizeof(op) / sizeof(op[0]));
+
+    for (int i = 0; i < n_op; i++)
+    {
+        printf(" %d - %s \n", i + 1, *(op + i));
+    }
+
+    do
+    {
+        printf("\n Escolha uma opção do menu: ");
+        val = readInt();
+
+    } while (val > n_op || val <= 0);
+
+    switch (val)
+    {
+    case 1:
+        clear();
+        menuPiloto(pilotos, tamPiloto);
+        break;
+
+    case 2:
+        clear();
+        menuCarro(carros, tamCarro);
+        break;
+
+    case 3:
+        menuCorridas(pilotos, carros, tamPiloto, tamCarro);
+        break;
+
+    case 4:
+        printf("Ainda n ha aqui nada!");
+        break;
+    case 5:
+        ExitProgram_wSave(pilotos, carros, tamPiloto, tamCarro);
+        break;
+
+    default:
+        menu(pilotos, carros, tamPiloto, tamCarro);
+    }
+}
+
+int main(int argc, char **argv)
+{
     //setlocale(LC_ALL, "Portuguese_Portugal.1252");
-    Karts k;
+    Piloto *pilotos = NULL;
+    Carro *carros = NULL;
+    int tamPilotos = 0, tamCarros = 0;
 
+    initRandom();
+    pilotos = ReadPilotos(&tamPilotos);
+    carros = ReadCarros(&tamCarros);
 
-    //    k = ReadProgram();
+    if (pilotos == NULL || carros == NULL)
+    {
+        ExitProgram();
+    }
 
-    while (1) {
-        system("cls");
-        menu(k.pilotos, k.carros); 
-        
-    } 
+    while (1)
+    {
+        clear();
+        menu(pilotos, carros, tamPilotos, tamCarros);
+    }
 
     return (EXIT_SUCCESS);
 }
