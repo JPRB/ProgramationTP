@@ -44,6 +44,10 @@ Piloto *ReadPilotos(int *tam)
                   &piloto.dataNasc.mes, &piloto.dataNasc.ano, &piloto.peso, &piloto.exp, &piloto.impedimento) == 8)
     {
         // validar id (unico), data, peso > 0, exp >= 0.0
+        if (piloto.id < 0 || piloto.peso <= 0 || piloto.exp < 0.0 || !ExistPiloto(pilotos, *tam, piloto.id))
+        {
+            return NULL;
+        }
 
         pilotos = AdicionaPiloto(pilotos, piloto, tam);
     }
@@ -136,7 +140,6 @@ int SavePilotos(Piloto pilotos[], int tam)
     }
 
     fclose(fpiloto);
-    free(p);
     free(pilotos);
     return 0;
 }
@@ -263,14 +266,14 @@ Piloto *PilotosDisponiveis(Piloto *p, int totalPilotos, int *pilotos_disponiveis
     return pilotos_disponiveis;
 }
 
-int ExistPiloto(Piloto pilotos[], int tam, int id_car)
+int ExistPiloto(Piloto pilotos[], int tam, int id)
 {
     if (pilotos != NULL)
     {
         for (int i = 0; i < tam; i++)
         {
             // existe - return 0
-            if (pilotos[i].id == id_car)
+            if (pilotos[i].id == id)
             {
                 return 0;
             }

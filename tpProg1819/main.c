@@ -13,8 +13,6 @@
 #include "Carro.h"
 #include "Corrida.h"
 
-
-
 void ExitProgram()
 {
     printf("\n Erro ao Carregar informacao\n");
@@ -31,15 +29,16 @@ int ExitProgram_wSave(Piloto *pilotos, Carro *carro, int tamPilotos, int tamCarr
 
     if (!savePilotos && !saveCarros && !saveCorrida)
     {
-        exit(0);
+        return (0);
     }
 }
 
 void menuPiloto(Piloto *p, int tam)
 {
-    char *op[] = {"Mostrar Pilotos", "Voltar"};
-    int opcoes = (sizeof(op) / sizeof(op[0])), val;
+    char *op[] = {"Mostrar Pilotos", "Adicionar Impedimento", "Voltar"};
+    int opcoes = (sizeof(op) / sizeof(op[0])), opc;
 
+    int id, imp;
     int voltar = 1;
 
     while (voltar)
@@ -53,19 +52,40 @@ void menuPiloto(Piloto *p, int tam)
 
         do
         {
-            printf("\n Escolha uma opção do menu: ");
-            val = readInt();
+            printf("\n Escolha uma opc do menu: ");
+            opc = readInt();
 
-        } while (val > opcoes || val <= 0);
+        } while (opc > opcoes || opc <= 0);
 
-        switch (val)
+        switch (opc)
         {
         case 1:
             clear();
+
             MostraPilotos(p, tam);
             break;
 
         case 2:
+            // comportamento incorreto. penalização
+            do
+            {
+                printf(" Introduza o id do piloto a penalizar: ");
+                id = readInt();
+
+            } while (ExistPiloto(p, tam, id) ? printf(" Piloto nao encontrado! \n") : printf(" ######  Piloto encontrado ###### \n\n") && id <= 0);
+
+            do
+            {
+                printf("\n  Introduza um impedimento (1-3): ");
+                imp = readInt();
+            } while (imp > 3 || imp <= 0);
+
+            p = SetImpedimento(p, id, imp, tam);
+
+            printf("\n  Piloto penalizado em %d unidades \n\n", imp);
+            break;
+
+        case 3:
             voltar = 0;
             break;
         }
@@ -90,7 +110,7 @@ void menuCarro(Carro *c, int tam)
 
         do
         {
-            printf("\n Escolha uma opção do menu: ");
+            printf("\n Escolha uma opc do menu: ");
             val = readInt();
 
         } while (val > opcoes || val <= 0);
@@ -176,43 +196,50 @@ void menu(Piloto *pilotos, Carro *carros, int tamPiloto, int tamCarro)
     char *op[] = {"Menu Pilotos", "Menu Carros", "Menu Corridas", "Modo Campeonato", "Exit"};
     int val, valid, n_op = (sizeof(op) / sizeof(op[0]));
 
-    for (int i = 0; i < n_op; i++)
-    {
-        printf(" %d - %s \n", i + 1, *(op + i));
-    }
+    int finnish = 1;
 
-    do
+    while (finnish)
     {
-        printf("\n Escolha uma opção do menu: ");
-        val = readInt();
-
-    } while (val > n_op || val <= 0);
-
-    switch (val)
-    {
-    case 1:
         clear();
-        menuPiloto(pilotos, tamPiloto);
-        break;
 
-    case 2:
-        clear();
-        menuCarro(carros, tamCarro);
-        break;
+        for (int i = 0; i < n_op; i++)
+        {
+            printf(" %d - %s \n", i + 1, *(op + i));
+        }
 
-    case 3:
-        menuCorridas(pilotos, carros, tamPiloto, tamCarro);
-        break;
+        do
+        {
+            printf("\n Escolha uma opção do menu: ");
+            val = readInt();
 
-    case 4:
-        printf("Ainda n ha aqui nada!");
-        break;
-    case 5:
-        ExitProgram_wSave(pilotos, carros, tamPiloto, tamCarro);
-        break;
+        } while (val > n_op || val <= 0);
 
-    default:
-        menu(pilotos, carros, tamPiloto, tamCarro);
+        switch (val)
+        {
+        case 1:
+            clear();
+            menuPiloto(pilotos, tamPiloto);
+            break;
+
+        case 2:
+            clear();
+            menuCarro(carros, tamCarro);
+            break;
+
+        case 3:
+            menuCorridas(pilotos, carros, tamPiloto, tamCarro);
+            break;
+
+        case 4:
+            Campeonato(pilotos, carros, tamPiloto, tamCarro);
+            break;
+        case 5:
+            finnish = ExitProgram_wSave(pilotos, carros, tamPiloto, tamCarro);
+            break;
+
+        default:
+            menu(pilotos, carros, tamPiloto, tamCarro);
+        }
     }
 }
 
@@ -233,11 +260,7 @@ int main(int argc, char **argv)
         return (EXIT_FAILURE);
     }
 
-    while (1)
-    {
-        clear();
-        menu(pilotos, carros, tamPilotos, tamCarros);
-    }
+    menu(pilotos, carros, tamPilotos, tamCarros);
 
     return (EXIT_SUCCESS);
 }

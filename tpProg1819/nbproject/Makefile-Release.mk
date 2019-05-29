@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/Campeonato.o \
 	${OBJECTDIR}/Carro.o \
 	${OBJECTDIR}/Corrida.o \
 	${OBJECTDIR}/Menus.o \
@@ -67,6 +68,11 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/tpprog1819.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/tpprog1819 ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/Campeonato.o: Campeonato.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Campeonato.o Campeonato.c
 
 ${OBJECTDIR}/Carro.o: Carro.c
 	${MKDIR} -p ${OBJECTDIR}

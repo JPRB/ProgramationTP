@@ -4,9 +4,11 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>Campeonato.h</itemPath>
       <itemPath>Carro.h</itemPath>
       <itemPath>Corrida.h</itemPath>
       <itemPath>Piloto.h</itemPath>
+      <itemPath>utils.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -126,13 +128,13 @@
         <itemPath>make.bat</itemPath>
         <itemPath>tpprog1819.exe.stackdump</itemPath>
       </logicalFolder>
+      <itemPath>Campeonato.c</itemPath>
       <itemPath>Carro.c</itemPath>
       <itemPath>Corrida.c</itemPath>
       <itemPath>Menus.c</itemPath>
       <itemPath>Piloto.c</itemPath>
       <itemPath>main.c</itemPath>
       <itemPath>utils.c</itemPath>
-      <itemPath>utils.h</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -251,6 +253,10 @@
       <item path=".vscode/settings.json" ex="false" tool="3" flavor2="0">
       </item>
       <item path=".vscode/tasks.json" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Campeonato.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Campeonato.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Carro.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -415,6 +421,10 @@
       <item path=".vscode/settings.json" ex="false" tool="3" flavor2="0">
       </item>
       <item path=".vscode/tasks.json" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Campeonato.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Campeonato.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Carro.c" ex="false" tool="0" flavor2="0">
       </item>

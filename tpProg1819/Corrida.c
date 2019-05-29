@@ -261,8 +261,10 @@ Rank *IniciaCorrida(Corredor *corrida, int nVoltas, int metros)
 
                     //printf(" %d + ", aux->ranking[j]);
                 }
-                // printf("| Segundos: %d \n\n", aux->rankingTotal);
+                
 
+
+                // Colocar tbm na lista rank os corredores que desistiram, na ultima posicao
                 rank[i].corredor = OrderCorredores(rank[i].corredor, aux);
                 // printf(" COrredor %s, AUX: %s\n", rank[i].corredor->piloto.nome, aux->piloto.nome);
             }
@@ -275,7 +277,7 @@ Rank *IniciaCorrida(Corredor *corrida, int nVoltas, int metros)
 
         printf("\n ----------------------------------------------------------------------------------------------------- ");
 
-        if (i != nVoltas - 1)
+        if (i != (nVoltas-1) )
         {
             printf("\n\n");
             //espera(5);

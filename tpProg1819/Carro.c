@@ -38,26 +38,12 @@ Carro *ReadCarros(int *tam)
 
     while (fscanf(f_cars, " %d %d %d", &carro.id, &carro.potencia, &carro.avariado) == 3)
     {
-        /*int res;
-
-            res = fscanf(f_cars, " %d %d %d", &carro.id, &carro.potencia, &carro.avariado);
-
-            if (res == EOF)
-            {
-                break;
-            }
-            else if (res == 3)
-            {*/
         // validar id (unico) && > 0, potencia > 0
-
+        if (carro.id < 0 || carro.potencia <= 0 || !ExistCar(carros, *tam, carro.id))
+        {
+            return NULL;
+        }
         carros = AdicionaCarro(carros, carro, tam);
-        /*}
-            else
-            {
-                free (carros);
-                printf("\n Erro ao Carregar informação\n");
-                exit(EXIT_FAILURE);
-            }*/
     }
 
     if (!feof(f_cars))
@@ -130,7 +116,6 @@ int SaveCarros(Carro carros[], int tam)
     }
 
     free(carros);
-    free(c);
     fclose(fcarros);
 
     return 0;
