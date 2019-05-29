@@ -26,7 +26,7 @@ int probEvento(float prob);
 void espera(unsigned int seg);
 
 // Obtem e devolve o dia e hora atuais 
-void obtemData(int *dia, int *mes, int *ano, int *h, int *m, int *s);
+void obtemData(int *dia, int *mes, int *ano);
 
 // Calcula e devolve o numero de segundos por volta 
 // de acordo com as informacoes recebidas por parametro

@@ -6,8 +6,6 @@
  * Created on 20 de Março de 2019
  */
 
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "Carro.h"
@@ -37,13 +35,10 @@ Carro *ReadCarros(int *tam)
         printf("Erro na alocacao de memoria\n");
         return NULL;
     }
-    else
-    {
 
-        //While
-        while (1)
-        {
-            int res;
+    while (fscanf(f_cars, " %d %d %d", &carro.id, &carro.potencia, &carro.avariado) == 3)
+    {
+        /*int res;
 
             res = fscanf(f_cars, " %d %d %d", &carro.id, &carro.potencia, &carro.avariado);
 
@@ -52,19 +47,24 @@ Carro *ReadCarros(int *tam)
                 break;
             }
             else if (res == 3)
-            {
-                // validar id (unico) && > 0, potencia > 0   
+            {*/
+        // validar id (unico) && > 0, potencia > 0
 
-                carros = AdicionaCarro(carros, carro, tam);
-            }
+        carros = AdicionaCarro(carros, carro, tam);
+        /*}
             else
             {
                 free (carros);
                 printf("\n Erro ao Carregar informação\n");
                 exit(EXIT_FAILURE);
-            }
-            
-        }
+            }*/
+    }
+
+    if (!feof(f_cars))
+    {
+        free(carros);
+        fclose(f_cars);
+        return NULL;
     }
 
     fclose(f_cars);
@@ -177,7 +177,7 @@ Carro *SetAvaria(Carro c[], int tam, int id)
 }
 
 int GetCarro_SAvaria(Carro c)
-{   
+{
     if (c.avariado > 0)
     {
         // há impedimento
@@ -277,9 +277,10 @@ Carro *eliminarCarro(Carro carro[], int *tam, int idCar)
                     j++;
                 }
                 (*tam)--;
+                return carro;
             }
         }
     }
 
-    return carro;
+    return NULL;
 }

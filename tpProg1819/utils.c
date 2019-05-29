@@ -32,19 +32,17 @@ void espera(unsigned int seg)
         ;
 }
 
-void obtemData(int *dia, int *mes, int *ano, int *h, int *m, int *s)
+void obtemData(int *dia, int *mes, int *ano)
 {
-    time_t a;
-    struct tm *b;
+    time_t today;
+    struct tm *now;
 
-    time(&a);
-    b = localtime(&a);
-    *dia = b->tm_mday;
-    *mes = b->tm_mon;
-    *ano = b->tm_year + 1900;
-    *h = b->tm_hour;
-    *m = b->tm_min;
-    *s = b->tm_sec;
+    time(&today);
+    now = localtime(&today);
+    *dia = now->tm_mday;
+    *mes = now->tm_mon+1;
+    *ano = now->tm_year + 1900;
+
 }
 
 int calculaSegundos(int idadeP, int pesoP, float expP, int PotC, int metros)
@@ -59,12 +57,12 @@ void testes()
 
     initRandom();
 
-    obtemData(&dia, &mes, &ano, &hora, &minuto, &seg);
+    obtemData(&dia, &mes, &ano);
     printf("%2.2d/%2.2d/%d: %2.2d:%2.2d:%2.2d\n", dia, mes, ano, hora, minuto, seg);
 
     espera(3);
 
-    obtemData(&dia, &mes, &ano, &hora, &minuto, &seg);
+    obtemData(&dia, &mes, &ano);
     printf("%2.2d/%2.2d/%d: %2.2d:%2.2d:%2.2d\n", dia, mes, ano, hora, minuto, seg);
 
     printf("10 valores aleatorios uniformes entre [4, 10]:\n");
@@ -80,26 +78,6 @@ void testes()
         printf("%d\n", calculaSegundos(30, 80, 20.0, 160, 1000));
 }
 
-void ExitProgram()
-{
-    printf("Erro ao Carregar informação");
-    exit(EXIT_FAILURE);
-}
-
-int ExitProgram_wSave(Piloto *pilotos, Carro *carro, int tamPilotos, int tamCarros)
-{
-    int savePilotos, saveCarros, saveCorrida = 0;
-
-    savePilotos = SavePilotos(pilotos, tamPilotos);
-
-    saveCarros = SaveCarros(carro, tamCarros);
-
-    if (!savePilotos && !saveCarros && !saveCorrida)
-    {
-        exit(0);
-    }
-}
-
 int readInt()
 {
     int integer;
@@ -108,8 +86,7 @@ int readInt()
     //le string
     scanf(" %5[^\n]", buffer);
 
-    while (fgetc(stdin) != '\n')
-        ;
+    while (fgetc(stdin) != '\n');
 
     for (int i = 0; i < strlen(buffer); i++)
     {

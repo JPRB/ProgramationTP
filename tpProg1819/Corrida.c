@@ -1,15 +1,14 @@
 /* 
- * File:   Carro.c
+ * File:   Carrida.c
  * Author: João Borges - a21260097
  *
  * Created on 21 de Março de 2019
  */
 
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "Corrida.h"
 
@@ -19,7 +18,7 @@ void CriaCorrida(int *nVoltas, int *compPista, int *nCarros)
     do
     {
         printf("Introduza o numero de voltas: ");
-        *nVoltas = 5; //readInt();
+        *nVoltas = 6; // readInt();
     } while (*nVoltas < 5 || *nVoltas > 10 || *nVoltas == -1);
 
     do
@@ -35,9 +34,9 @@ void CriaCorrida(int *nVoltas, int *compPista, int *nCarros)
     } while (*nCarros <= 0);
 }
 
-Corredor *AtribuiCorredores(Piloto **p, Carro **c, int totalPilotos, int totalCarros, int maxCorredores)
+Corredor *AtribuiCorredores(Piloto **p, Carro **c, int totalPilotos, int totalCarros, int maxCorredores, int nVoltas)
 {
-    Corredor *corrida = NULL, *novo;
+    Corredor *corrida = NULL, *novo, *aux;
 
     Piloto *pilotos_disponiveis;
     Carro *carros_disponiveis;
@@ -94,7 +93,7 @@ Corredor *AtribuiCorredores(Piloto **p, Carro **c, int totalPilotos, int totalCa
         maxCorredores = pilotos_disponiveis_conta;
     }
 
-    printf("\n\nMaximo de Corredores: %d\n\n", maxCorredores);
+    printf("\n\n Maximo de Corredores: %d\n\n", maxCorredores);
     // ########################################################################################
 
     // ##################### $$$$$$$$$$$$$$$$$$$€€€€€€€€€€€€€€€€€€€€€ ##############################
@@ -110,6 +109,7 @@ Corredor *AtribuiCorredores(Piloto **p, Carro **c, int totalPilotos, int totalCa
     for (int i = 0; i < maxCorredores; i++)
     {
         novo = malloc(sizeof(Corredor));
+
         if (novo == NULL)
         {
             fprintf(stderr, "Erro na alocacao de memoria\n");
@@ -131,6 +131,8 @@ Corredor *AtribuiCorredores(Piloto **p, Carro **c, int totalPilotos, int totalCa
 
         // Se existir colocar em Corredores
         novo->piloto = GetPilotoByID(pilotos_disponiveis, pilotos_disponiveis_conta, id);
+
+        novo->ageP = GetPilotoAge(novo->piloto);
         // retirar da lista de pilotos disponiveis
         pilotos_disponiveis = eliminarPiloto(pilotos_disponiveis, &pilotos_disponiveis_conta, id);
 
@@ -156,10 +158,30 @@ Corredor *AtribuiCorredores(Piloto **p, Carro **c, int totalPilotos, int totalCa
         //  retirar da lista de carros disponiveis baseado no id
         carros_disponiveis = eliminarCarro(carros_disponiveis, &carros_disponiveis_conta, id);
 
-        corrida = Insere_corredor(corrida, novo);
-    }
+        // #####################################################################################
+        // #####################################################################################
 
-    // #####################################################################################
+        novo->desistiu = 0;
+        novo->ranking = malloc(nVoltas * sizeof(int));
+
+        if (!novo->ranking)
+        {
+            fprintf(stderr, "Erro a alocar memoria para classificacao");
+            free(novo);
+            return NULL;
+        }
+
+        novo->prox = NULL;
+        if (!corrida)
+        {
+            corrida = novo;
+        }
+        else
+        {
+            aux->prox = novo;
+        }
+        aux = novo;
+    }
 
     //Print dos corredores que vão competir
     mostra_corredores(corrida);
@@ -167,14 +189,16 @@ Corredor *AtribuiCorredores(Piloto **p, Carro **c, int totalPilotos, int totalCa
     //print dos pilotos e dos carros que ficaram de fora e a razão
     mostra_corredores_Fora(pilotos_disponiveis, pilotos_disponiveis_conta, *p, totalPilotos, *c, totalCarros,
                            carros_disponiveis, carros_disponiveis_conta);
-    
+
+    // ############# Decrementar impedimentos e avarias a Pilotos/Carros ###################
+    // #####################################################################################
 
     for (int i = 0; i < totalPilotos; i++)
     {
         if (!GetPiloto_Simpedimento((*p)[i]))
         {
             // Decrementar impedimento ao Piloto que está de fora
-            *p = SetImpedimento(*p, (*p+i)->id, -1, totalPilotos);
+            *p = SetImpedimento(*p, (*p + i)->id, -1, totalPilotos);
         }
     }
 
@@ -182,42 +206,251 @@ Corredor *AtribuiCorredores(Piloto **p, Carro **c, int totalPilotos, int totalCa
     {
         if (!GetCarro_SAvaria((*c)[i]))
         {
-            // Decrementar impedimento ao carro que está de fora
-            *c = SetAvaria(*c, (*c+i)->id, totalCarros);
+            // Decrementar avaria ao carro que está de fora
+            *c = SetAvaria(*c, (*c + i)->id, totalCarros);
         }
     }
 
-    getchar();
+    // #####################################################################################
+    // #####################################################################################
+
     return corrida;
 }
 
-Corredor *Insere_corredor(Corredor *corrida, Corredor *corredor)
+Rank *IniciaCorrida(Corredor *corrida, int nVoltas, int metros)
 {
+    Rank *rank, Raux;
     Corredor *aux;
+    int desistencias = 0, opc, nDaVolta;
+    char resp;
 
-    if (corrida == NULL)
+    rank = (Rank *)malloc(sizeof(Rank) * nVoltas);
+    if (!rank)
     {
-        corredor->prox = NULL;
-        corrida = corredor;
+        fprintf(stderr, "Erro a alocar memoria\n");
+        return NULL;
+    }
+
+    clear();
+    for (int i = 0; i < nVoltas; i++)
+    {
+        rank[i].corredor = NULL;
+        rank[i].id = i + 1;
+
+        printf("\n ------------------------------------------ VOLTA: %d -------------------------------------------------\n\n", rank[i].id);
+        for (aux = corrida; aux; aux = aux->prox)
+        {
+            if (aux->desistiu == 0 && probEvento(0.05))
+            {
+                aux->desistiu = i + 1; // teve acidente na volta i+1
+                desistencias++;
+                //   SetImpedimento(piloto, idPiloto, 2, total)?
+            }
+
+            if (aux->desistiu == 0)
+            {
+                aux->ranking[i] = calculaSegundos(aux->ageP, aux->piloto.peso, aux->piloto.exp, aux->carro.potencia, metros);
+
+                //printf(" %s  (Id: %d) | Carro %d: ", aux->piloto.nome, aux->piloto.id, aux->carro.id);
+                for (int j = 0; j <= i; j++)
+                {
+                    if (j == 0)
+                        aux->rankingTotal = 0;
+
+                    aux->rankingTotal += aux->ranking[j];
+
+                    //printf(" %d + ", aux->ranking[j]);
+                }
+                // printf("| Segundos: %d \n\n", aux->rankingTotal);
+
+                rank[i].corredor = OrderCorredores(rank[i].corredor, aux);
+                // printf(" COrredor %s, AUX: %s\n", rank[i].corredor->piloto.nome, aux->piloto.nome);
+            }
+        }
+
+        mostra_ranking_Volta(rank[i]);
+
+        mostra_desistencias(corrida, desistencias);
+        //printf("Po's desistencias %s", corrida->piloto.nome);
+
+        printf("\n ----------------------------------------------------------------------------------------------------- ");
+
+        if (i != nVoltas - 1)
+        {
+            printf("\n\n");
+            //espera(5);
+        }
+        printf("\n\n");
+    }
+
+    printf(" 1 - Ver Raking total \n");
+    printf(" 2 - Ver Raking de uma volta \n");
+
+    do
+    {
+        printf("\n Escolha uma opc do menu: ");
+        opc = readInt();
+
+    } while (opc > 2 || opc <= 0);
+
+    switch (opc)
+    {
+    case 1:
+        mostra_ranking(rank, nVoltas);
+        mostra_desistencias(corrida, desistencias);
+        break;
+
+    case 2:
+        do
+        {
+            printf("\n Introduza a volta: ");
+            nDaVolta = readInt();
+
+        } while (nDaVolta < 1 || nDaVolta > nVoltas);
+
+        mostra_ranking(rank, nDaVolta);
+        break;
+    }
+
+    getchar();
+    getchar();
+    return rank;
+}
+
+Corredor *OrderCorredores(Corredor *lista, Corredor *new)
+{
+    Corredor *aux = NULL, *novo;
+
+    novo = (Corredor *)malloc(sizeof(Corredor));
+    if (!novo)
+    {
+        fprintf(stderr, "Erro a alocar memoria.\n");
+        return NULL;
+    }
+
+    *novo = *new;
+
+    novo->prox = NULL;
+    // printf(" Novo %s\n", novo->piloto.nome);
+    if (lista == NULL)
+    {
+        lista = novo;
+        // printf(" Lista %s\n", lista->piloto.nome);
+    }
+    else if (lista->rankingTotal > novo->rankingTotal)
+    {
+        novo->prox = lista;
+        lista = novo;
     }
     else
     {
-        aux = corrida;
-        while (aux->prox != NULL)
+        aux = lista;
+        while (aux->prox != NULL && aux->prox->rankingTotal <= novo->rankingTotal)
+        {
             aux = aux->prox;
-        aux->prox = corredor;
+        }
+
+        novo->prox = aux->prox;
+        aux->prox = novo;
     }
 
-    return corrida;
+    return lista;
+}
+
+void mostra_ranking_Volta(Rank r)
+{
+    Corredor *aux;
+    int i = 1;
+    aux = r.corredor;
+
+    while (aux != NULL)
+    {
+        if (aux->desistiu == 0)
+        {
+            printf("\t %d: %s  (Id: %d) | Carro %d: ", i++, aux->piloto.nome, aux->piloto.id, aux->carro.id);
+
+            for (int j = 0; j < r.id; j++)
+            {
+                printf(" %d", aux->ranking[j]);
+
+                printf(" + ");
+            }
+            printf(": %d segundos\n", aux->rankingTotal);
+        }
+        else
+        {
+            printf("\t # %s  (Id: %d) | Carro %d - Desistiu na volta: %d\n", aux->piloto.nome, aux->piloto.id, aux->carro.id, aux->desistiu);
+        }
+        
+
+        aux = aux->prox;
+    }
+}
+
+void mostra_ranking(Rank r[], int nVoltas)
+{
+    Corredor *aux;
+    int i = 1;
+
+    if (r != NULL)
+    {
+        aux = r[nVoltas - 1].corredor;
+        printf("\n ------------------------------------------ Ranking Geral -------------------------------------------------\n\n");
+        while (aux != NULL)
+        {
+            if (aux->desistiu == 0)
+            {
+                printf("\t %d:  %s  (Id: %d) | Carro %d: ", i++, aux->piloto.nome, aux->piloto.id, aux->carro.id);
+
+                for (int j = 0; j < nVoltas; j++)
+                {
+                    printf(" %d + ", aux->ranking[j]);
+                }
+
+                printf(": %d segundos\n", aux->rankingTotal);
+            }
+            else
+            {
+                printf("\t # %s  (Id: %d) | Carro %d - Desistiu na volta: %d\n", aux->piloto.nome, aux->piloto.id, aux->carro.id, aux->desistiu);
+            }
+            
+            aux = aux->prox;
+        }
+    }
+    else
+    {
+        fprintf(stderr, "Nao Existe nenhuma corrida efetuada");
+    }
+}
+
+void mostra_desistencias(Corredor *c, int desistencias)
+{
+    Corredor *aux = c;
+
+    //printf("Antes ciclo: %s  \n", aux->piloto.nome);
+    if (desistencias)
+        printf("\n\n\t Desistiu: \n");
+
+    while (aux != NULL)
+    {
+        //printf("Antes %s  \n", aux->piloto.nome);
+        if (aux->desistiu != 0)
+        {
+            printf("\t    # %s  (Id: %d) | Carro %d - Desistiu na volta: %d\n", aux->piloto.nome, aux->piloto.id, aux->carro.id, aux->desistiu);
+        }
+        //printf("Antes inc aux %s  \n", aux->prox->piloto.nome);
+        aux = aux->prox;
+        //printf("Depois inc aux %s\n", aux->piloto.nome);
+    }
 }
 
 void mostra_corredores(Corredor *c)
 {
     Corredor *aux = c;
-    printf("-------------------- Corredores -----------------------\n");
+    printf(" -------------------- Corredores -----------------------\n");
     while (aux != NULL)
     {
-        printf(" %s  (Id: %d) | Carro %d \n", aux->piloto.nome, aux->piloto.id, aux->carro.id);
+        printf(" %s  (Id: %d) | Carro %d IDADE: %d\n", aux->piloto.nome, aux->piloto.id, aux->carro.id, aux->ageP);
         aux = aux->prox;
     }
     free(aux);
@@ -228,9 +461,13 @@ void mostra_corredores_Fora(Piloto p_disp[], int tamPil, Piloto piloto[], int pt
     //printf("tam Car : %d \t tam Piloto : %d \t p tam: %d \t c tam: %d", tamCar, tamPil, ptam, ctam);
     if (tamCar > 0 || tamPil > 0 || ptam > 0 || ctam > 0)
     {
-        printf("\n ------------ Corredores de Fora ------------- \n");
+        printf("\n -------------------- Corredores de Fora ------------------------ \n");
         for (int i = 0; i < tamPil; i++)
             printf(" Nome piloto: %s (ID: %d), Razao: Nao sorteado\n", p_disp[i].nome, p_disp[i].id);
+
+        for (int i = 0; i < tamCar; i++)
+            printf(" Carro Id: %d, Razao: Nao sorteado\n", c_disp[i].id);
+
         for (int i = 0; i < ptam; i++)
         {
             if (!GetPiloto_Simpedimento(piloto[i]))
@@ -238,9 +475,6 @@ void mostra_corredores_Fora(Piloto p_disp[], int tamPil, Piloto piloto[], int pt
                 printf(" Nome piloto: %s (ID: %d), Razao: Impedido\n", piloto[i].nome, piloto[i].id);
             }
         }
-
-        for (int i = 0; i < tamCar; i++)
-            printf(" Carro Id: %d, Razao: Nao sorteado\n", c_disp[i].id);
 
         for (int i = 0; i < ctam; i++)
         {

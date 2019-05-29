@@ -15,11 +15,124 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <logicalFolder name="tpProg1819" displayName="tpProg1819" projectFiles="true">
+        <logicalFolder name=".vscode" displayName=".vscode" projectFiles="true">
+          <logicalFolder name="ipch" displayName="ipch" projectFiles="true">
+            <logicalFolder name="21639f7b1cc5bae2"
+                           displayName="21639f7b1cc5bae2"
+                           projectFiles="true">
+              <itemPath>.vscode/ipch/21639f7b1cc5bae2/mmap_address.bin</itemPath>
+            </logicalFolder>
+            <logicalFolder name="2163a67b1cc5c6c7"
+                           displayName="2163a67b1cc5c6c7"
+                           projectFiles="true">
+              <itemPath>.vscode/ipch/2163a67b1cc5c6c7/mmap_address.bin</itemPath>
+            </logicalFolder>
+            <logicalFolder name="288e2d1f1f103a93"
+                           displayName="288e2d1f1f103a93"
+                           projectFiles="true">
+              <itemPath>.vscode/ipch/288e2d1f1f103a93/mmap_address.bin</itemPath>
+            </logicalFolder>
+            <logicalFolder name="288e361f1f1049de"
+                           displayName="288e361f1f1049de"
+                           projectFiles="true">
+              <itemPath>.vscode/ipch/288e361f1f1049de/mmap_address.bin</itemPath>
+            </logicalFolder>
+            <logicalFolder name="2e3d79beb1b96157"
+                           displayName="2e3d79beb1b96157"
+                           projectFiles="true">
+              <itemPath>.vscode/ipch/2e3d79beb1b96157/mmap_address.bin</itemPath>
+            </logicalFolder>
+            <logicalFolder name="51eb2bc6c14f68a7"
+                           displayName="51eb2bc6c14f68a7"
+                           projectFiles="true">
+              <itemPath>.vscode/ipch/51eb2bc6c14f68a7/mmap_address.bin</itemPath>
+            </logicalFolder>
+            <logicalFolder name="72656bff3b3b629a"
+                           displayName="72656bff3b3b629a"
+                           projectFiles="true">
+              <itemPath>.vscode/ipch/72656bff3b3b629a/mmap_address.bin</itemPath>
+            </logicalFolder>
+            <logicalFolder name="890bf5d855e41527"
+                           displayName="890bf5d855e41527"
+                           projectFiles="true">
+              <itemPath>.vscode/ipch/890bf5d855e41527/mmap_address.bin</itemPath>
+            </logicalFolder>
+            <logicalFolder name="8a06c63b8d42baf8"
+                           displayName="8a06c63b8d42baf8"
+                           projectFiles="true">
+              <itemPath>.vscode/ipch/8a06c63b8d42baf8/mmap_address.bin</itemPath>
+            </logicalFolder>
+            <logicalFolder name="98a6936ba1865ffb"
+                           displayName="98a6936ba1865ffb"
+                           projectFiles="true">
+              <itemPath>.vscode/ipch/98a6936ba1865ffb/mmap_address.bin</itemPath>
+            </logicalFolder>
+            <logicalFolder name="9e007d187271d11b"
+                           displayName="9e007d187271d11b"
+                           projectFiles="true">
+              <itemPath>.vscode/ipch/9e007d187271d11b/mmap_address.bin</itemPath>
+            </logicalFolder>
+            <logicalFolder name="a18ce21d76845507"
+                           displayName="a18ce21d76845507"
+                           projectFiles="true">
+              <itemPath>.vscode/ipch/a18ce21d76845507/mmap_address.bin</itemPath>
+            </logicalFolder>
+            <logicalFolder name="c29762a7c15037d1"
+                           displayName="c29762a7c15037d1"
+                           projectFiles="true">
+              <itemPath>.vscode/ipch/c29762a7c15037d1/mmap_address.bin</itemPath>
+            </logicalFolder>
+            <logicalFolder name="c515609718636c08"
+                           displayName="c515609718636c08"
+                           projectFiles="true">
+              <itemPath>.vscode/ipch/c515609718636c08/mmap_address.bin</itemPath>
+            </logicalFolder>
+            <logicalFolder name="e95195d2017e636b"
+                           displayName="e95195d2017e636b"
+                           projectFiles="true">
+              <itemPath>.vscode/ipch/e95195d2017e636b/mmap_address.bin</itemPath>
+            </logicalFolder>
+            <logicalFolder name="ff0dc5fb8c841828"
+                           displayName="ff0dc5fb8c841828"
+                           projectFiles="true">
+              <itemPath>.vscode/ipch/ff0dc5fb8c841828/mmap_address.bin</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+          <itemPath>.vscode/launch.json</itemPath>
+          <itemPath>.vscode/settings.json</itemPath>
+          <itemPath>.vscode/tasks.json</itemPath>
+        </logicalFolder>
+        <logicalFolder name="dist" displayName="dist" projectFiles="true">
+          <logicalFolder name="Debug" displayName="Debug" projectFiles="true">
+            <logicalFolder name="MinGW-Windows"
+                           displayName="MinGW-Windows"
+                           projectFiles="true">
+              <itemPath>dist/Debug/MinGW-Windows/Carros.txt</itemPath>
+              <itemPath>dist/Debug/MinGW-Windows/Pilotos.txt</itemPath>
+              <itemPath>dist/Debug/MinGW-Windows/PilotosTest.txt</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+        </logicalFolder>
+        <itemPath>.dep.inc</itemPath>
+        <itemPath>Carros.txt</itemPath>
+        <itemPath>CarrosTest.txt</itemPath>
+        <itemPath>Karts.exe</itemPath>
+        <itemPath>Makefile</itemPath>
+        <itemPath>Pilotos.txt</itemPath>
+        <itemPath>PilotosTest.txt</itemPath>
+        <itemPath>genericFunctions.c</itemPath>
+        <itemPath>genericFunctions.h</itemPath>
+        <itemPath>make.bat</itemPath>
+        <itemPath>tpprog1819.exe.stackdump</itemPath>
+      </logicalFolder>
       <itemPath>Carro.c</itemPath>
       <itemPath>Corrida.c</itemPath>
       <itemPath>Menus.c</itemPath>
       <itemPath>Piloto.c</itemPath>
       <itemPath>main.c</itemPath>
+      <itemPath>utils.c</itemPath>
+      <itemPath>utils.h</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -33,6 +146,9 @@
       <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="Debug" type="1">
@@ -48,13 +164,109 @@
           <commandlineTool>gcc</commandlineTool>
         </cTool>
       </compileType>
+      <item path=".dep.inc" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path=".vscode/ipch/21639f7b1cc5bae2/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/2163a67b1cc5c6c7/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/288e2d1f1f103a93/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/288e361f1f1049de/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/2e3d79beb1b96157/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/51eb2bc6c14f68a7/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/72656bff3b3b629a/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/890bf5d855e41527/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/8a06c63b8d42baf8/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/98a6936ba1865ffb/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/9e007d187271d11b/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/a18ce21d76845507/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/c29762a7c15037d1/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/c515609718636c08/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/e95195d2017e636b/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/ff0dc5fb8c841828/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/launch.json" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path=".vscode/settings.json" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path=".vscode/tasks.json" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Carro.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="Carro.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Carros.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CarrosTest.txt" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Corrida.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="Corrida.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Karts.exe" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Makefile" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Menus.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -62,7 +274,38 @@
       </item>
       <item path="Piloto.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Pilotos.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PilotosTest.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="dist/Debug/MinGW-Windows/Carros.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="dist/Debug/MinGW-Windows/Pilotos.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="dist/Debug/MinGW-Windows/PilotosTest.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="genericFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="genericFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="make.bat" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tpprog1819.exe.stackdump" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utils.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="utils.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -85,13 +328,109 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path=".dep.inc" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path=".vscode/ipch/21639f7b1cc5bae2/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/2163a67b1cc5c6c7/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/288e2d1f1f103a93/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/288e361f1f1049de/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/2e3d79beb1b96157/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/51eb2bc6c14f68a7/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/72656bff3b3b629a/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/890bf5d855e41527/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/8a06c63b8d42baf8/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/98a6936ba1865ffb/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/9e007d187271d11b/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/a18ce21d76845507/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/c29762a7c15037d1/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/c515609718636c08/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/e95195d2017e636b/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/ipch/ff0dc5fb8c841828/mmap_address.bin"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path=".vscode/launch.json" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path=".vscode/settings.json" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path=".vscode/tasks.json" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Carro.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="Carro.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Carros.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CarrosTest.txt" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Corrida.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="Corrida.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Karts.exe" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Makefile" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Menus.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -99,7 +438,38 @@
       </item>
       <item path="Piloto.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Pilotos.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PilotosTest.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="dist/Debug/MinGW-Windows/Carros.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="dist/Debug/MinGW-Windows/Pilotos.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="dist/Debug/MinGW-Windows/PilotosTest.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="genericFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="genericFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="make.bat" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tpprog1819.exe.stackdump" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utils.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="utils.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

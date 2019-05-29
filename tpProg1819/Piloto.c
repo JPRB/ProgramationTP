@@ -1,3 +1,10 @@
+/* 
+ * File:   piloto.h
+ * Author: João Borges - a21260097
+ *
+ * Created on 21 de Março de 2019
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -31,34 +38,21 @@ Piloto *ReadPilotos(int *tam)
         fclose(fpiloto);
         return NULL;
     }
-    else
+
+    //While can read
+    while (fscanf(fpiloto, " %99[^\n] %d %d %d %d %d %f %d ", piloto.nome, &piloto.id, &piloto.dataNasc.dia,
+                  &piloto.dataNasc.mes, &piloto.dataNasc.ano, &piloto.peso, &piloto.exp, &piloto.impedimento) == 8)
     {
+        // validar id (unico), data, peso > 0, exp >= 0.0
 
-        //While can read
-        while (1)
-        {
-            int res;
-            res = fscanf(fpiloto, " %99[^\n] %d %d %d %d %d %f %d ", piloto.nome, &piloto.id, &piloto.dataNasc.dia,
-                         &piloto.dataNasc.mes, &piloto.dataNasc.ano, &piloto.peso, &piloto.exp, &piloto.impedimento);
+        pilotos = AdicionaPiloto(pilotos, piloto, tam);
+    }
 
-            if (res == EOF)
-            {
-                break;
-            }
-            else if (res == 8)
-            {
-                // validar id (unico), data, peso > 0, exp >= 0.0   
-
-                pilotos = AdicionaPiloto(pilotos, piloto, tam);
-            }
-            else
-            {
-                free (pilotos);
-                printf("\n Erro ao Carregar informação\n");
-                exit(EXIT_FAILURE);
-            }
-            
-        }
+    if (!feof(fpiloto))
+    {
+        free(pilotos);
+        fclose(fpiloto);
+        return NULL;
     }
 
     fclose(fpiloto);
@@ -304,9 +298,28 @@ Piloto *eliminarPiloto(Piloto p[], int *tam, int idPiloto)
                     j++;
                 }
                 (*tam)--;
+                return p;
             }
         }
     }
 
-    return p;
+    return NULL;
+}
+
+int GetPilotoAge(Piloto p)
+{
+
+    int age;
+    Date dataAtual;
+
+    obtemData(&dataAtual.dia, &dataAtual.mes, &dataAtual.ano);
+
+    age = (dataAtual.ano - p.dataNasc.ano) - 1;
+
+    if ((dataAtual.dia - p.dataNasc.dia) >= 0 && (dataAtual.mes - p.dataNasc.mes) >= 0)
+    {
+        age++;
+    }
+
+    return age;
 }

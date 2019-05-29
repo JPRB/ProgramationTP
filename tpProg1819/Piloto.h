@@ -1,8 +1,8 @@
 /* 
  * File:   piloto.h
- * Author: João Borges
+ * Author: João Borges - a21260097
  *
- * Created on 21 de Março de 2019, 15:57
+ * Created on 21 de Março de 2019
  */
 
 #ifndef PILOTO_H
@@ -119,5 +119,8 @@ int ExistPiloto(Piloto pilotos[], int tam, int id_car);
 
 
 Piloto *eliminarPiloto(Piloto p[], int *tam, int idPiloto);
+
+
+int GetPilotoAge(Piloto p);
 
 #endif /* PILOTO_H */

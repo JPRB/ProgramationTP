@@ -1,12 +1,18 @@
 Paulo Andrade 
-2 23 12 1995 76 0.5 0
+1 23 12 1995 76 0.5 0
 
 Faisca 
-3 1 1 1980 50 9.5 5
+2 1 1 1995 50 9.5 5
 
 Diana Alves Pombo 
 4 1 10 1990 55 4.5 2
 
 Ana Luisa Freitas 
 7 12 7 1976 68 1.0 3
+
+Nuno Ricardos Rodrigues Borges
+5 24 8 1989 55 6.5 0
+
+Andre Borges Figueiredo
+6 18 2 1989 76 6.5 0
 

@@ -39,7 +39,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/Corrida.o \
 	${OBJECTDIR}/Menus.o \
 	${OBJECTDIR}/Piloto.o \
-	${OBJECTDIR}/main.o
+	${OBJECTDIR}/genericFunctions.o \
+	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/utils.o
 
 
 # C Compiler Flags
@@ -86,10 +88,20 @@ ${OBJECTDIR}/Piloto.o: Piloto.c
 	${RM} "$@.d"
 	$(COMPILE.c) -g -s -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Piloto.o Piloto.c
 
+${OBJECTDIR}/genericFunctions.o: genericFunctions.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -s -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/genericFunctions.o genericFunctions.c
+
 ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -s -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
+
+${OBJECTDIR}/utils.o: utils.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -s -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils.o utils.c
 
 # Subprojects
 .build-subprojects:

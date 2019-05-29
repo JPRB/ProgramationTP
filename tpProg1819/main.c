@@ -7,11 +7,33 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
+
 #include "Piloto.h"
 #include "Carro.h"
 #include "Corrida.h"
 
-#include <locale.h>
+
+
+void ExitProgram()
+{
+    printf("\n Erro ao Carregar informacao\n");
+    return;
+}
+
+int ExitProgram_wSave(Piloto *pilotos, Carro *carro, int tamPilotos, int tamCarros)
+{
+    int savePilotos, saveCarros, saveCorrida = 0;
+
+    savePilotos = SavePilotos(pilotos, tamPilotos);
+
+    saveCarros = SaveCarros(carro, tamCarros);
+
+    if (!savePilotos && !saveCarros && !saveCorrida)
+    {
+        exit(0);
+    }
+}
 
 void menuPiloto(Piloto *p, int tam)
 {
@@ -90,11 +112,14 @@ void menuCarro(Carro *c, int tam)
 void menuCorridas(Piloto *pilotos, Carro *carros, int tamPiloto, int tamCarro)
 {
     int nVoltas, compPista, nCarros;
-    int val;
+
+    int opc, nDaVolta;
 
     int voltar = 1;
 
     Corredor *corrida;
+    Rank *ranking;
+
     while (voltar)
     {
         clear();
@@ -102,28 +127,40 @@ void menuCorridas(Piloto *pilotos, Carro *carros, int tamPiloto, int tamCarro)
 
         printf(" 1 - Criar Novo Corrida Individual \n");
         printf(" 2 - Ver Raking total \n");
-        printf(" 3 - Ver Raking por volta \n");
+        printf(" 3 - Ver Raking de uma volta \n");
         printf(" 4 - Voltar\n");
         do
         {
             printf("\n Escolha uma opc do menu: ");
-            val = readInt();
+            opc = readInt();
 
-        } while (val > 4 || val <= 0);
+        } while (opc > 4 || opc <= 0);
 
-        switch (val)
+        switch (opc)
         {
         case 1:
 
             CriaCorrida(&nVoltas, &compPista, &nCarros);
-            corrida = AtribuiCorredores(&pilotos, &carros, tamPiloto, tamCarro, nCarros);
-            
+            clear();
+            corrida = AtribuiCorredores(&pilotos, &carros, tamPiloto, tamCarro, nCarros, nVoltas);
+            ranking = IniciaCorrida(corrida, nVoltas, compPista);
             break;
 
         case 2:
+            // mostra_ranking(ranking, nVoltas);
+            // getchar();
             break;
-            
+
         case 3:
+            // do
+            // {
+            //     printf("\n Introduza a volta: ");
+            //     nDaVolta = readInt();
+
+            // } while (nDaVolta < 1 || nDaVolta > nVoltas);
+
+            // mostra_ranking(ranking, nDaVolta);
+            // getchar();
             break;
 
         case 4:
@@ -193,6 +230,7 @@ int main(int argc, char **argv)
     if (pilotos == NULL || carros == NULL)
     {
         ExitProgram();
+        return (EXIT_FAILURE);
     }
 
     while (1)
