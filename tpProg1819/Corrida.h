@@ -52,7 +52,7 @@ void CriaCorrida(int *nVoltas, int *compPista, int  *nCarros);
  * 
  * @return Corredores que vão participar na corrida
  */
-Corredor* AtribuiCorredores(Piloto **p, Carro **c, int totalPilotos, int totalCarros, int totalCorredores, int nVoltas);
+Corredor* AtribuiCorredores(Piloto *p, Carro *c, int totalPilotos, int totalCarros, int totalCorredores, int nVoltas);
 
 void SetImpAvar(Piloto **p, Carro **c, int totalPilotos, int totalCarros);
 

@@ -24,7 +24,7 @@ Rank *Correr(Piloto *pilotos, Carro *carros, int tamPiloto, int tamCarro)
     CriaCorrida(&nVoltas, &compPista, &nCarros);
 
     //clear();
-    corrida = AtribuiCorredores(&pilotos, &carros, tamPiloto, tamCarro, nCarros, nVoltas);
+    corrida = AtribuiCorredores(pilotos, carros, tamPiloto, tamCarro, nCarros, nVoltas);
 
     SetImpAvar(&pilotos, &carros, tamPiloto, tamCarro);
 
@@ -64,7 +64,7 @@ void CriaCorrida(int *nVoltas, int *compPista, int *nCarros)
     } while (*nCarros <= 0);
 }
 
-Corredor *AtribuiCorredores(Piloto **p, Carro **c, int totalPilotos, int totalCarros, int maxCorredores, int nVoltas)
+Corredor *AtribuiCorredores(Piloto *p, Carro *c, int totalPilotos, int totalCarros, int maxCorredores, int nVoltas)
 {
     Corredor *corrida = NULL, *novo, *aux;
 
@@ -83,7 +83,7 @@ Corredor *AtribuiCorredores(Piloto **p, Carro **c, int totalPilotos, int totalCa
     //printf("\n\nPilotos: %d Carros: %d Max Corredores %d \n\n", totalPilotos, totalCarros, maxCorredores);
 
     //####################### Pilotos Disponiveis para correr ##############################
-    pilotos_disponiveis = PilotosDisponiveis(*p, totalPilotos, &pilotos_disponiveis_conta);
+    pilotos_disponiveis = PilotosDisponiveis(p, totalPilotos, &pilotos_disponiveis_conta);
 
     // printf("Pilotos disponiveis: %d \n", pilotos_disponiveis_conta);
     // for (int i = 0; i < pilotos_disponiveis_conta; i++)
@@ -96,7 +96,7 @@ Corredor *AtribuiCorredores(Piloto **p, Carro **c, int totalPilotos, int totalCa
     //printf("Conta: %d \t Id: %d Nome: %s Imped: %d \n",pilotos_disponiveis_conta, pilotos_disponiveis->id, pilotos_disponiveis->nome, pilotos_disponiveis->impedimento);
 
     // ####################### Carros disponiveis para correr ##############################
-    carros_disponiveis = CarrosDisponiveis(*c, totalCarros, &carros_disponiveis_conta);
+    carros_disponiveis = CarrosDisponiveis(c, totalCarros, &carros_disponiveis_conta);
 
     // printf("\n\nCarros disponiveis: %d \n", carros_disponiveis_conta);
     // for (int i = 0; i < carros_disponiveis_conta; i++)
@@ -217,7 +217,7 @@ Corredor *AtribuiCorredores(Piloto **p, Carro **c, int totalPilotos, int totalCa
     mostra_corredores(corrida);
 
     //print dos pilotos e dos carros que ficaram de fora e a razão
-    mostra_corredores_Fora(pilotos_disponiveis, pilotos_disponiveis_conta, *p, totalPilotos, *c, totalCarros,
+    mostra_corredores_Fora(pilotos_disponiveis, pilotos_disponiveis_conta, p, totalPilotos, c, totalCarros,
                            carros_disponiveis, carros_disponiveis_conta);
 
     free(pilotos_disponiveis);

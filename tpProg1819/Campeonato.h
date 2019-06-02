@@ -18,24 +18,32 @@
 typedef struct corrida {
     int id; // n.º da corrida || id max = nProvas
     Corredor *corredores;
-    Rank *classificacao;
     int nVoltas;
     struct corrida *prox;
 } Corridas;
+
+typedef struct classGeral {
+    int idpiloto;
+    float pontuacao;
+    struct classGeral *prox;
+} RankGeral;
 
 typedef struct championship {
     int nProvas;
     int nProvas_realizadas;
     Corridas *corrida;
+    RankGeral *rankingGeral;
 } Campeonato;
 
 
 
 
+RankGeral *PreencheClassGeral(Piloto *p, int tam);
+
 void ChampionShip(Piloto *pilotos, Carro *carros, int totalPilotos, int totalCarros, int *champion, Campeonato *c);
 
 
-int SaveCampeonato(char *nomeFich, Campeonato lista);
+int SaveCampeonato(char *nomeFich, Campeonato *lista);
 
 #endif /* CAMPEONATO_H */
 

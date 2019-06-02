@@ -20,9 +20,9 @@ void ExitProgram()
     return;
 }
 
-int ExitProgram_wSave(Piloto *pilotos, Carro *carro, int tamPilotos, int tamCarros, Campeonato campeonato)
+int ExitProgram_wSave(Piloto *pilotos, Carro *carro, int tamPilotos, int tamCarros, Campeonato *campeonato)
 {
-    int savePilotos, saveCarros, saveCampeonato = 0;
+    int savePilotos, saveCarros, saveCampeonato;
 
     savePilotos = SavePilotos(pilotos, tamPilotos);
 
@@ -150,7 +150,7 @@ void RealizaCorrida(Piloto *pilotos, Carro *carros, int tamPiloto, int tamCarro)
     Correr(pilotos, carros, tamPiloto, tamCarro);
 }
 
-void menu(Piloto *pilotos, Carro *carros, int tamPiloto, int tamCarro, int champ, Campeonato c)
+void menu(Piloto *pilotos, Carro *carros, int tamPiloto, int tamCarro, int champ, Campeonato *c)
 {
 
     char *op[] = {"Menu Pilotos", "Menu Carros", "Menu Corridas", "Modo Campeonato", "Exit"};
@@ -200,7 +200,7 @@ void menu(Piloto *pilotos, Carro *carros, int tamPiloto, int tamCarro, int champ
         case 4:
             clear();
             printf("+--------------- Campeonato  -------------+\n\n");
-            ChampionShip(pilotos, carros, tamPiloto, tamCarro, &champ, &c);
+            ChampionShip(pilotos, carros, tamPiloto, tamCarro, &champ, c);
             break;
         case 5:
             finnish = ExitProgram_wSave(pilotos, carros, tamPiloto, tamCarro, c);
@@ -217,7 +217,7 @@ int main(int argc, char **argv)
     //setlocale(LC_ALL, "Portuguese_Portugal.1252");
     Piloto *pilotos = NULL;
     Carro *carros = NULL;
-    Campeonato c;
+    Campeonato *c = NULL;
 
     int tamPilotos = 0, tamCarros = 0;
     int champ = 0;
@@ -234,7 +234,6 @@ int main(int argc, char **argv)
 
     // ver se campeonato está ativo, se estiver
 
-    c.nProvas_realizadas = 0;
     
     menu(pilotos, carros, tamPilotos, tamCarros, champ, c);
 
