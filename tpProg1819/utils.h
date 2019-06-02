@@ -4,10 +4,6 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include "Carro.h"
-#include "Piloto.h"
-#include "Corrida.h"
-
 
 #define min(A,B)    ((A)<(B)?(A):(B))
 #define max(A,B)    ((A)>(B)?(A):(B))
@@ -36,8 +32,6 @@ int calculaSegundos(int idadeP, int pesoP, float expP, int PotC, int metros);
 
 
 void ExitProgram();
-
-int ExitProgram_wSave(Piloto *pilotos, Carro *carro, int tamPilotos, int tamCarros);
 
 int readInt();
 

@@ -1,1 +1,1 @@
-gcc -o Karts main.c Piloto.c Carro.c Corrida.c utils.c
+gcc -o Karts main.c utils.c Piloto.c Carro.c Corrida.c  Campeonato.c

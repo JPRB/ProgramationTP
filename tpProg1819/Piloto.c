@@ -11,9 +11,6 @@
 
 #include "Piloto.h"
 
-//void menuPiloto(){
-//
-//}
 
 Piloto *ReadPilotos(int *tam)
 {
@@ -30,7 +27,7 @@ Piloto *ReadPilotos(int *tam)
     }
 
     //Memory alocated to Piloto Size
-    pilotos = (Piloto *)malloc(sizeof(Piloto));
+    pilotos = (Piloto *) malloc(sizeof(Piloto));
 
     if (pilotos == NULL)
     {
@@ -99,13 +96,13 @@ void MostraPilotos(Piloto piloto[], int tam)
 
     for (int i = 0; i < tam; i++)
     {
-        printf("| %-36s | %-11d | %.2d/%.2d/%-13d | %-6d | %-12.1f | %-10d |\n",
+        printf("| %-36s | %-11d | %.2d/%.2d/%-13d | %-6d | %-12.1f | %-11d |\n",
                piloto[i].nome, piloto[i].id, piloto[i].dataNasc.dia, piloto[i].dataNasc.mes,
                piloto[i].dataNasc.ano, piloto[i].peso, piloto[i].exp, piloto[i].impedimento);
     }
 
     printf("+--------------------------------------+-------------+---------------------+"
-           "------------+--------------+-------------+\n");
+           "------------+--------------+---------+\n");
 
     //     rpintf("Size: %d Tam: %d", sizeof(piloto), tam);
 }
@@ -144,24 +141,6 @@ int SavePilotos(Piloto pilotos[], int tam)
     return 0;
 }
 
-/*Carro *GetImpedimento(Carro *car, int totalCar, int id) {
-
-    for (int i = 0; i < totalCar; i++)
-        if (car[i]->id == id)
-            return car[i];
-
-    return 0;
-}*/
-
-//int GetImpedimento(Piloto piloto[], int totalPilotos, int idPiloto) {
-//
-//    for (int i = 0; i < totalPilotos; i++) {
-//        if (piloto[i].id == idPiloto) {
-//            return piloto[i].impedimento;
-//        }
-//    }
-//    return -1;
-//}
 
 Piloto *SetImpedimento(Piloto p[], int idPiloto, int valorImpedimento, int totalPilotos)
 {
@@ -178,7 +157,31 @@ Piloto *SetImpedimento(Piloto p[], int idPiloto, int valorImpedimento, int total
     }
     else
     {
-        fprintf(stderr, "Piloto não encontrado!");
+        fprintf(stderr, "Piloto não encontrado!\n Nao foi possivel atualizar impedimento");
+    }
+
+    return NULL;
+}
+
+Piloto *SetExp(Piloto p[], int idPiloto, float valorexp, int totalPilotos)
+{
+    if (p != NULL)
+    {
+        for (int i = 0; i < totalPilotos; i++)
+        {
+            if (p[i].id == idPiloto)
+            {
+                if (valorexp < 0 && p[i].exp >= 1)
+                    p[i].exp += valorexp;
+                else if (valorexp > 0)
+                    p[i].exp += valorexp;
+                return p;
+            }
+        }
+    }
+    else
+    {
+        fprintf(stderr, "Piloto não encontrado!\n Nao foi possivel atualizar experiencia");
     }
 
     return NULL;

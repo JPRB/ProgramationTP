@@ -12,6 +12,7 @@
 #include "Piloto.h"
 #include "Carro.h"
 #include "Corrida.h"
+#include "Campeonato.h"
 
 void ExitProgram()
 {
@@ -19,18 +20,23 @@ void ExitProgram()
     return;
 }
 
-int ExitProgram_wSave(Piloto *pilotos, Carro *carro, int tamPilotos, int tamCarros)
+int ExitProgram_wSave(Piloto *pilotos, Carro *carro, int tamPilotos, int tamCarros, Campeonato campeonato)
 {
-    int savePilotos, saveCarros, saveCorrida = 0;
+    int savePilotos, saveCarros, saveCampeonato = 0;
 
     savePilotos = SavePilotos(pilotos, tamPilotos);
 
     saveCarros = SaveCarros(carro, tamCarros);
 
-    if (!savePilotos && !saveCarros && !saveCorrida)
+    saveCampeonato = SaveCampeonato("Campeonato", campeonato);
+
+    if (!savePilotos && !saveCarros && !saveCampeonato)
     {
         return (0);
     }
+
+    fprintf(stderr, "Impossivel sair do programa");
+    return 1;
 }
 
 void menuPiloto(Piloto *p, int tam)
@@ -129,68 +135,22 @@ void menuCarro(Carro *c, int tam)
     }
 }
 
-void menuCorridas(Piloto *pilotos, Carro *carros, int tamPiloto, int tamCarro)
+void RealizaCorrida(Piloto *pilotos, Carro *carros, int tamPiloto, int tamCarro)
 {
-    int nVoltas, compPista, nCarros;
+    // int nVoltas, compPista, nCarros;
 
-    int opc, nDaVolta;
+    // Corredor *corrida;
+    // Rank *ranking;
 
-    int voltar = 1;
+    // CriaCorrida(&nVoltas, &compPista, &nCarros);
+    // clear();
+    // corrida = AtribuiCorredores(&pilotos, &carros, tamPiloto, tamCarro, nCarros, nVoltas);
+    // ranking = IniciaCorrida(corrida, nVoltas, compPista);
 
-    Corredor *corrida;
-    Rank *ranking;
-
-    while (voltar)
-    {
-        clear();
-        printf("+--------------- Corrida Individual -------------+\n\n");
-
-        printf(" 1 - Criar Novo Corrida Individual \n");
-        printf(" 2 - Ver Raking total \n");
-        printf(" 3 - Ver Raking de uma volta \n");
-        printf(" 4 - Voltar\n");
-        do
-        {
-            printf("\n Escolha uma opc do menu: ");
-            opc = readInt();
-
-        } while (opc > 4 || opc <= 0);
-
-        switch (opc)
-        {
-        case 1:
-
-            CriaCorrida(&nVoltas, &compPista, &nCarros);
-            clear();
-            corrida = AtribuiCorredores(&pilotos, &carros, tamPiloto, tamCarro, nCarros, nVoltas);
-            ranking = IniciaCorrida(corrida, nVoltas, compPista);
-            break;
-
-        case 2:
-            // mostra_ranking(ranking, nVoltas);
-            // getchar();
-            break;
-
-        case 3:
-            // do
-            // {
-            //     printf("\n Introduza a volta: ");
-            //     nDaVolta = readInt();
-
-            // } while (nDaVolta < 1 || nDaVolta > nVoltas);
-
-            // mostra_ranking(ranking, nDaVolta);
-            // getchar();
-            break;
-
-        case 4:
-            voltar = 0;
-            break;
-        }
-    }
+    Correr(pilotos, carros, tamPiloto, tamCarro);
 }
 
-void menu(Piloto *pilotos, Carro *carros, int tamPiloto, int tamCarro)
+void menu(Piloto *pilotos, Carro *carros, int tamPiloto, int tamCarro, int champ, Campeonato c)
 {
 
     char *op[] = {"Menu Pilotos", "Menu Carros", "Menu Corridas", "Modo Campeonato", "Exit"};
@@ -200,8 +160,7 @@ void menu(Piloto *pilotos, Carro *carros, int tamPiloto, int tamCarro)
 
     while (finnish)
     {
-        clear();
-
+        //clear();
         for (int i = 0; i < n_op; i++)
         {
             printf(" %d - %s \n", i + 1, *(op + i));
@@ -227,18 +186,28 @@ void menu(Piloto *pilotos, Carro *carros, int tamPiloto, int tamCarro)
             break;
 
         case 3:
-            menuCorridas(pilotos, carros, tamPiloto, tamCarro);
+            clear();
+            if (champ == 0)
+            {    
+                printf("+--------------- Corrida Individual -------------+\n\n");
+                RealizaCorrida(pilotos, carros, tamPiloto, tamCarro);
+            }
+            else {
+                printf(" Nao e' possivel fazer corridas com o campeonato a decorrer \n");
+            }
             break;
 
         case 4:
-            Campeonato(pilotos, carros, tamPiloto, tamCarro);
+            clear();
+            printf("+--------------- Campeonato  -------------+\n\n");
+            ChampionShip(pilotos, carros, tamPiloto, tamCarro, &champ, &c);
             break;
         case 5:
-            finnish = ExitProgram_wSave(pilotos, carros, tamPiloto, tamCarro);
+            finnish = ExitProgram_wSave(pilotos, carros, tamPiloto, tamCarro, c);
             break;
 
-        default:
-            menu(pilotos, carros, tamPiloto, tamCarro);
+            // default:
+            //     menu(pilotos, carros, tamPiloto, tamCarro, champ);
         }
     }
 }
@@ -248,7 +217,10 @@ int main(int argc, char **argv)
     //setlocale(LC_ALL, "Portuguese_Portugal.1252");
     Piloto *pilotos = NULL;
     Carro *carros = NULL;
+    Campeonato c;
+
     int tamPilotos = 0, tamCarros = 0;
+    int champ = 0;
 
     initRandom();
     pilotos = ReadPilotos(&tamPilotos);
@@ -260,7 +232,11 @@ int main(int argc, char **argv)
         return (EXIT_FAILURE);
     }
 
-    menu(pilotos, carros, tamPilotos, tamCarros);
+    // ver se campeonato está ativo, se estiver
+
+    c.nProvas_realizadas = 0;
+    
+    menu(pilotos, carros, tamPilotos, tamCarros, champ, c);
 
     return (EXIT_SUCCESS);
 }

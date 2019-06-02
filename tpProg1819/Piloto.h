@@ -8,6 +8,8 @@
 #ifndef PILOTO_H
 #define PILOTO_H
 
+#include "utils.h"
+
 typedef struct Date
 {
     int dia;
@@ -65,6 +67,7 @@ void MostraPiloto(Piloto piloto);
 
 int GetImpedimento(int valorImpedimento, int idPiloto);
 
+
 /**
  * 
  * @param piloto - Vetor de Pilotos
@@ -76,7 +79,9 @@ int GetImpedimento(int valorImpedimento, int idPiloto);
  *
  * @param totalPilotos - Total de Pilotos
  */
-Piloto *SetImpedimento(Piloto *piloto, int idPiloto, int valorImpedimento, int totalPilotos);
+Piloto *SetImpedimento(Piloto piloto[], int idPiloto, int valorImpedimento, int totalPilotos);
+
+Piloto *SetExp(Piloto p[], int idPiloto, float valorexp, int totalPilotos);
 
 Piloto GetPilotoByID(Piloto *piloto,int totalPilotos, int id);
 
