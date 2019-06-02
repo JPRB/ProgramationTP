@@ -28,7 +28,6 @@ Rank *Correr(Piloto *pilotos, Carro *carros, int tamPiloto, int tamCarro)
 
     SetImpAvar(&pilotos, &carros, tamPiloto, tamCarro);
 
-    getchar();
     if (!corrida)
     {
         return NULL;
@@ -37,6 +36,7 @@ Rank *Correr(Piloto *pilotos, Carro *carros, int tamPiloto, int tamCarro)
     ranking = IniciaCorrida(corrida, nVoltas, compPista);
 
     AtualizaCorredores(&pilotos, ranking, tamPiloto);
+
 
     return ranking;
 }
@@ -285,7 +285,7 @@ Rank *IniciaCorrida(Corredor *corrida, int nVoltas, int metros)
         if (i != (nVoltas - 1))
         {
             printf("\n\n");
-            //espera(5);
+            espera(5);
         }
         printf("\n\n");
     }
@@ -322,20 +322,31 @@ Rank *IniciaCorrida(Corredor *corrida, int nVoltas, int metros)
         break;
     }
 
-    espera(3);
-
     return rank;
 }
 
 void AtualizaCorredores(Piloto **p, Rank *rank, int totalp)
 {
-    Corredor *aux;
+    Corredor *aux, *lastGiro;
 
     for (int i = 0; i < rank->nVoltas; i++)
     {
+
         aux = rank[i].corridaOrdenada;
+
         while (aux != NULL)
         {
+            lastGiro = rank[rank->nVoltas - 1].corridaOrdenada;
+            while (lastGiro != NULL)
+            {
+                if (lastGiro->desistiu == 0)
+                {
+                    // Por cada volta, atribuir 0.5 de pontuacao se piloto nao desistiu
+                    *p = SetExp(*p, aux->piloto.id, 0.5, totalp);
+                }
+
+                lastGiro = lastGiro->prox;
+            }
 
             // if (aux->desistiu == 0 && aux->id == rank[i].corridaOrdenada->id)
             // {

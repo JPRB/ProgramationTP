@@ -48,4 +48,7 @@ RankGeral *OrdenaRankgeral(RankGeral *lista);
 
 void swap(RankGeral *x, RankGeral *y);
 
+void libertaCampeonato(Campeonato c);
+
+Campeonato ReadCampeonato(char *nomeFich);
 #endif /* CAMPEONATO_H */

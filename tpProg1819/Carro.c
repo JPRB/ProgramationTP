@@ -100,7 +100,7 @@ int SaveCarros(Carro carros[], int tam)
     FILE *fcarros;
     Carro *c;
 
-    fcarros = fopen("CarrosTest.txt", "w");
+    fcarros = fopen("Carros.txt", "w");
 
     if (fcarros == NULL)
     {

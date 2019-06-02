@@ -120,7 +120,7 @@ int SavePilotos(Piloto pilotos[], int tam)
     FILE *fpiloto;
     Piloto *p;
 
-    fpiloto = fopen("PilotosTest.txt", "w");
+    fpiloto = fopen("Pilotos.txt", "w");
 
     if (fpiloto == NULL)
     {

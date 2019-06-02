@@ -28,7 +28,7 @@ int ExitProgram_wSave(Piloto *pilotos, Carro *carro, int tamPilotos, int tamCarr
 
     saveCarros = SaveCarros(carro, tamCarros);
 
-    saveCampeonato = SaveCampeonato("Campeonato", campeonato);
+    saveCampeonato = SaveCampeonato("Campeonato.dat", campeonato);
 
     if (!savePilotos && !saveCarros && !saveCampeonato)
     {
@@ -137,17 +137,23 @@ void menuCarro(Carro *c, int tam)
 
 void RealizaCorrida(Piloto *pilotos, Carro *carros, int tamPiloto, int tamCarro)
 {
-    // int nVoltas, compPista, nCarros;
+    Corredor *corredor, *aux;
+    Rank *ranking;
 
-    // Corredor *corrida;
-    // Rank *ranking;
+    ranking = Correr(pilotos, carros, tamPiloto, tamCarro);
 
-    // CriaCorrida(&nVoltas, &compPista, &nCarros);
-    // clear();
-    // corrida = AtribuiCorredores(&pilotos, &carros, tamPiloto, tamCarro, nCarros, nVoltas);
-    // ranking = IniciaCorrida(corrida, nVoltas, compPista);
+    corredor = ranking->corridaOrdenada;
+    while (corredor != NULL)
+    {
+        if (corredor->ranking)
+            free(corredor->ranking);
 
-    Correr(pilotos, carros, tamPiloto, tamCarro);
+        aux = corredor;
+        corredor = aux->prox;
+        free(aux);
+    }
+
+    free(ranking);
 }
 
 void menu(Piloto *pilotos, Carro *carros, int tamPiloto, int tamCarro, int champ, Campeonato c)
@@ -188,11 +194,12 @@ void menu(Piloto *pilotos, Carro *carros, int tamPiloto, int tamCarro, int champ
         case 3:
             clear();
             if (champ == 0)
-            {    
+            {
                 printf("+--------------- Corrida Individual -------------+\n\n");
                 RealizaCorrida(pilotos, carros, tamPiloto, tamCarro);
             }
-            else {
+            else
+            {
                 printf(" Nao e' possivel fazer corridas com o campeonato a decorrer \n");
             }
             break;
@@ -220,9 +227,8 @@ int main(int argc, char **argv)
     Campeonato c;
 
     int tamPilotos = 0, tamCarros = 0;
-    int champ = 0;
+    int champ;
 
-    
     initRandom();
     pilotos = ReadPilotos(&tamPilotos);
     carros = ReadCarros(&tamCarros);
@@ -234,8 +240,18 @@ int main(int argc, char **argv)
     }
 
     // ver se campeonato está ativo, se estiver
-    c.nProvas_realizadas = 0;
-    
+
+    c = ReadCampeonato("Campeonato.dat");
+
+    if (c.nProvas < c.nProvas_realizadas)
+    {
+        champ = 1;
+    }
+    else
+    {
+        champ = 0;
+    }
+
     menu(pilotos, carros, tamPilotos, tamCarros, champ, c);
 
     return (EXIT_SUCCESS);

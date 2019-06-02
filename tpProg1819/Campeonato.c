@@ -64,7 +64,6 @@ Campeonato ChampionShip(Piloto *pilotos, Carro *carros, int totalPilotos, int to
         return lista;
     }
 
-    *champ = 1;
     printf(" 1 - Realizar Corrida\n");
     printf(" 2 - Sair de Campeonato\n");
 
@@ -75,12 +74,21 @@ Campeonato ChampionShip(Piloto *pilotos, Carro *carros, int totalPilotos, int to
 
     } while (opc > 2 || opc <= 0);
 
+    *champ = 1;
     switch (opc)
     {
 
     case 1:
 
-        classFinal = PreencheClassGeral(pilotos, totalPilotos);
+        if (lista.rankingGeral == NULL)
+        {
+            classFinal = PreencheClassGeral(pilotos, totalPilotos);
+        }
+        else 
+        {
+            classFinal = lista.rankingGeral;
+        }
+
 
         //c->corrida[c->nProvas_realizadas].classificacao =
         r = Correr(pilotos, carros, totalPilotos, totalCarros);
@@ -105,7 +113,7 @@ Campeonato ChampionShip(Piloto *pilotos, Carro *carros, int totalPilotos, int to
                     if (rG->idpiloto == aux->piloto.id)
                     {
                         rG->pontuacao += 0.5;
-                        printf("id %d nome piloto %s pontos: %f\n", aux->piloto.id, aux->piloto.nome, rG->pontuacao);
+                        // printf("id %d nome piloto %s pontos: %f\n", aux->piloto.id, aux->piloto.nome, rG->pontuacao);
                     }
                     rG = rG->prox;
                 }
@@ -124,8 +132,9 @@ Campeonato ChampionShip(Piloto *pilotos, Carro *carros, int totalPilotos, int to
                     //printf(" %d\n", rG->idpiloto);
                     if (rG->idpiloto == aux->piloto.id)
                     {
+                        rG->nCorridas++;
                         rG->pontuacao += pontos;
-                        printf("id %d nome piloto %s pontos: %f\n", aux->piloto.id, aux->piloto.nome, rG->pontuacao);
+                        // printf("id %d nome piloto %s pontos: %f\n", aux->piloto.id, aux->piloto.nome, rG->pontuacao);
                     }
                     rG = rG->prox;
                 }
@@ -138,21 +147,21 @@ Campeonato ChampionShip(Piloto *pilotos, Carro *carros, int totalPilotos, int to
             aux = aux->prox;
         }
 
-        classFinal = OrdenaRankgeral(classFinal);
+        // classFinal = OrdenaRankgeral(classFinal);
 
-        printf("aqui");
-        rG = classFinal;
-        while (rG != NULL)
-        {
-            printf("id %d pontos: %f\n", rG->idpiloto, rG->pontuacao);
+        // printf("aqui");
+        // rG = classFinal;
+        // while (rG != NULL)
+        // {
+        //     printf("id %d pontos: %f\n", rG->idpiloto, rG->pontuacao);
 
-            rG = rG->prox;
-        }
+        //     rG = rG->prox;
+        // }
 
         // Atribuir 10 pontos de exp ao campeao
         if (lista.nProvas_realizadas == lista.nProvas)
         {
-            
+
             *champ = 0;
         }
 
@@ -173,10 +182,8 @@ Campeonato ChampionShip(Piloto *pilotos, Carro *carros, int totalPilotos, int to
 RankGeral *OrdenaRankgeral(RankGeral *lista)
 {
 
-    RankGeral  *aux, *novo = NULL;
+    RankGeral *aux, *novo = NULL;
     int troca;
-
-   
 
     do
     {
@@ -198,7 +205,6 @@ RankGeral *OrdenaRankgeral(RankGeral *lista)
     return novo;
 }
 
-
 void swap(RankGeral *x, RankGeral *y)
 {
     int tempid = x->idpiloto;
@@ -212,17 +218,17 @@ void swap(RankGeral *x, RankGeral *y)
 
 int SaveCampeonato(char *nomeFich, Campeonato lista)
 {
-    Corredor *c;
     RankGeral *r;
-    Corridas *corridas;
     FILE *f = fopen(nomeFich, "wb");
-
+    int nCorredores = 0;
     if (!f)
     {
         fprintf(stderr, "Impossivel abrir o ficheiro");
         fclose(f);
         return -1;
     }
+
+    fwrite(&nCorredores, sizeof(int), 1, f);
 
     // n de provas
     fwrite(&lista.nProvas, sizeof(int), 1, f);
@@ -234,54 +240,49 @@ int SaveCampeonato(char *nomeFich, Campeonato lista)
 
     while (r)
     {
-
+        nCorredores++;
         fwrite(&r->idpiloto, sizeof(int), 1, f);
-        fwrite(&r->pontuacao, sizeof(int), 1, f);
+        fwrite(&r->nCorridas, sizeof(int), 1, f);
+        fwrite(&r->pontuacao, sizeof(float), 1, f);
 
         r = r->prox;
     }
+    rewind(f);
+    fwrite(&nCorredores, sizeof(int), 1, f);
 
-    // corridas = lista->corrida;
-
-    // while (corridas)
-    // {
-
-    //     fwrite(&corridas->id, sizeof(int), 1, f);
-    //     fwrite(&corridas->nVoltas, sizeof(int), 1, f);
-
-    //     c = corridas->corredores;
-    //     while (c)
-    //     {
-    //         fwrite(&c, sizeof(Corredor), 1, f);
-    //         c = c->prox;
-    //     }
-
-    //     //r = corridas->classificacao;
-    //     c = r[r->nVoltas - 1].corridaOrdenada;
-
-    //     while (c)
-    //     {
-    //         fwrite(&c, sizeof(Corredor), 1, f);
-    //         c = c->prox;
-    //     }
-
-    //     corridas = corridas->prox;
-    // }
-    // fwrite(&lista->idade, sizeof(int), 1, f);
-
-    // fwrite(lista->nome, sizeof(char), strlen(lista->nome), f);
-
-    // fwrite(&lista->nresp, sizeof(int), 1, f);
-
-    // p = lista->dados;
-    // while (p)
-    // {
-    //     fwrite(&p->d, sizeof(info), 1, f);
-    //     p = p->prox;
-    // }
-    // lista = lista->prox;
-
+    libertaCampeonato(lista);
     return 0;
+}
+
+void libertaCampeonato(Campeonato c)
+{
+    RankGeral *r, *raux;
+    Corridas *corrida, *caux;
+    Corredor *corredor, *aux;
+
+    while (r != NULL)
+    {
+        raux = r;
+        r = raux->prox;
+        free(raux);
+    }
+
+    while (corredor != NULL)
+    {
+        if (corredor->ranking)
+            free(corredor->ranking);
+
+        aux = corredor;
+        corredor = aux->prox;
+        free(aux);
+    }
+
+    while (corrida != NULL)
+    {
+        caux = corrida;
+        corrida = caux->prox;
+        free(caux);
+    }
 }
 
 RankGeral *PreencheClassGeral(Piloto *p, int tam)
@@ -307,4 +308,78 @@ RankGeral *PreencheClassGeral(Piloto *p, int tam)
         classArray = novo;
     }
     return classArray;
+}
+
+Campeonato ReadCampeonato(char *nomeFich)
+{
+    Campeonato lista;
+    RankGeral *r;
+    FILE *f = fopen(nomeFich, "rb");
+
+    int nCorredores;
+    if (!f)
+    {
+        fprintf(stderr, "Erro ao abrir o ficheiro\n");
+        fclose(f);
+        return lista;
+    }
+
+    if (!fread(&nCorredores, sizeof(int), 1, f))
+    {
+        fprintf(stderr, "Ficheiro corrompido\n");
+        fclose(f);
+        return lista;
+    }
+
+    if (!fread(&lista.nProvas, sizeof(int), 1, f))
+    {
+        fprintf(stderr, "Ficheiro corrompido\n");
+        fclose(f);
+        return lista;
+    }
+
+    if (!fread(&lista.nProvas_realizadas, sizeof(int), 1, f))
+    {
+        fprintf(stderr, "Ficheiro corrompido\n");
+        fclose(f);
+        return lista;
+    }
+
+    while (nCorredores--)
+    {
+        r = malloc(sizeof(RankGeral));
+
+        if (!r)
+        {
+            fprintf(stderr, "Ficheiro corrompido\n");
+            fclose(f);
+            return lista;
+        }
+
+        if (!fread(&r->idpiloto, sizeof(int), 1, f))
+        {
+            fprintf(stderr, "Ficheiro corrompido\n");
+            fclose(f);
+            return lista;
+        }
+
+        if (!fread(&r->nCorridas, sizeof(int), 1, f))
+        {
+            fprintf(stderr, "Ficheiro corrompido\n");
+            fclose(f);
+            return lista;
+        }
+
+        if (!fread(&r->pontuacao, sizeof(float), 1, f))
+        {
+            fprintf(stderr, "Ficheiro corrompido\n");
+            fclose(f);
+            return lista;
+        }
+
+        r->prox = lista.rankingGeral;
+        lista.rankingGeral = r;
+    }
+
+    return lista;
 }
