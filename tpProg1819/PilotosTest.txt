@@ -2,7 +2,7 @@ Paulo Andrade
 1 23 12 1995 70 3.5 9
 
 Faisca 
-2 1 1 1995 54 8.5 2
+2 1 1 1995 54 9.5 0
 
 Diana Alves Pombo 
 4 1 10 1990 55 4.5 9

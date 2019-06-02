@@ -37,7 +37,6 @@ Rank *Correr(Piloto *pilotos, Carro *carros, int tamPiloto, int tamCarro)
     ranking = IniciaCorrida(corrida, nVoltas, compPista);
 
     AtualizaCorredores(&pilotos, ranking, tamPiloto);
-    system("pause");
 
     return ranking;
 }
@@ -48,19 +47,19 @@ void CriaCorrida(int *nVoltas, int *compPista, int *nCarros)
     do
     {
         printf("Introduza o numero de voltas: ");
-        *nVoltas = 6; // readInt();
+        *nVoltas = readInt();
     } while (*nVoltas < 5 || *nVoltas > 10 || *nVoltas == -1);
 
     do
     {
         printf("Introduza o comprimento da Pista (m): ");
-        *compPista = 500; // readInt();
+        *compPista = readInt();
     } while (*compPista < 500 || *compPista > 1000 || *compPista == -1);
 
     do
     {
         printf("Introduza o numero de Carros max: ");
-        *nCarros = 3; // readInt();
+        *nCarros = readInt();
     } while (*nCarros <= 0);
 }
 

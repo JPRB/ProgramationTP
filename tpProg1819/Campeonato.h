@@ -14,36 +14,38 @@
 
 #include "utils.h"
 
-
-typedef struct corrida {
+typedef struct corrida
+{
     int id; // n.º da corrida || id max = nProvas
     Corredor *corredores;
     int nVoltas;
     struct corrida *prox;
 } Corridas;
 
-typedef struct classGeral {
+typedef struct classGeral
+{
     int idpiloto;
     float pontuacao;
+    int nCorridas;
     struct classGeral *prox;
 } RankGeral;
 
-typedef struct championship {
+typedef struct championship
+{
     int nProvas;
     int nProvas_realizadas;
     Corridas *corrida;
     RankGeral *rankingGeral;
 } Campeonato;
 
-
-
-
 RankGeral *PreencheClassGeral(Piloto *p, int tam);
 
-void ChampionShip(Piloto *pilotos, Carro *carros, int totalPilotos, int totalCarros, int *champion, Campeonato *c);
+Campeonato ChampionShip(Piloto *pilotos, Carro *carros, int totalPilotos, int totalCarros, int *champ, Campeonato lista);
 
+int SaveCampeonato(char *nomeFich, Campeonato lista);
 
-int SaveCampeonato(char *nomeFich, Campeonato *lista);
+RankGeral *OrdenaRankgeral(RankGeral *lista);
+
+void swap(RankGeral *x, RankGeral *y);
 
 #endif /* CAMPEONATO_H */
-

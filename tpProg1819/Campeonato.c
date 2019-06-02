@@ -27,7 +27,7 @@ int SetNumberOfProvas()
     return nProvas;
 }
 
-void ChampionShip(Piloto *pilotos, Carro *carros, int totalPilotos, int totalCarros, int *champ, Campeonato *lista)
+Campeonato ChampionShip(Piloto *pilotos, Carro *carros, int totalPilotos, int totalCarros, int *champ, Campeonato lista)
 {
 
     // int nVoltas, compPista, nCarros;
@@ -35,20 +35,21 @@ void ChampionShip(Piloto *pilotos, Carro *carros, int totalPilotos, int totalCar
     int i;
     int *campeonato, opc;
 
+    int pontos = 5;
     Rank *r;
     RankGeral *classFinal, *novo, *rG;
     Corredor *aux;
 
     // Corridas *corrida, *aux1;
-    Campeonato *camp;
+    // Campeonato *camp;
 
-    camp = malloc(sizeof(Campeonato));
-    if (!camp)
-    {
-        fprintf(stderr, "Erro a alocar memoria\n");
-        *champ = 0;
-        return;
-    }
+    // camp = malloc(sizeof(Campeonato));
+    // if (!camp)
+    // {
+    //     fprintf(stderr, "Erro a alocar memoria\n");
+    //     *champ = 0;
+    //     return;
+    // }
 
     // if (*champ == 0)
     // {
@@ -57,10 +58,10 @@ void ChampionShip(Piloto *pilotos, Carro *carros, int totalPilotos, int totalCar
     //     //camp->nProvas_realizadas = 0;
     // }
 
-    if (*champ == 0 && (camp->nProvas = SetNumberOfProvas()) == -1)
+    if (*champ == 0 && (lista.nProvas = SetNumberOfProvas()) == -1)
     {
         fprintf(stderr, "Criacao de Campeonato Inválido");
-        return;
+        return lista;
     }
 
     *champ = 1;
@@ -78,13 +79,6 @@ void ChampionShip(Piloto *pilotos, Carro *carros, int totalPilotos, int totalCar
     {
 
     case 1:
-        // corrida = malloc(sizeof(Corridas));
-        // if (!corrida)
-        // {
-        //     fprintf(stderr, "Erro a alocar memoria\n");
-        //     *champ = 0;
-        //     return;
-        // }
 
         classFinal = PreencheClassGeral(pilotos, totalPilotos);
 
@@ -93,11 +87,11 @@ void ChampionShip(Piloto *pilotos, Carro *carros, int totalPilotos, int totalCar
 
         if (!r)
         {
-            return;
+            return lista;
         }
 
-        camp->nProvas_realizadas++;
-        
+        lista.nProvas_realizadas++;
+
         // Por cada volta, atribuir 0.5 de pontuacao se piloto nao desistiu
         for (int i = 0; i < r->nVoltas; i++)
         {
@@ -118,60 +112,57 @@ void ChampionShip(Piloto *pilotos, Carro *carros, int totalPilotos, int totalCar
             }
         }
 
-        // if (lista != NULL)
-        // {
-        //     camp = lista;
-        // }
+        // no final da corrida atribuir pontuacoes 5, 4, 3, 2, 1
+        aux = r[r->nVoltas - 1].corridaOrdenada;
+        while (aux)
+        {
+            if (aux->desistiu == 0)
+            {
+                rG = classFinal;
+                while (rG != NULL)
+                {
+                    //printf(" %d\n", rG->idpiloto);
+                    if (rG->idpiloto == aux->piloto.id)
+                    {
+                        rG->pontuacao += pontos;
+                        printf("id %d nome piloto %s pontos: %f\n", aux->piloto.id, aux->piloto.nome, rG->pontuacao);
+                    }
+                    rG = rG->prox;
+                }
+                if (pontos > 0)
+                {
+                    pontos--;
+                }
+            }
 
-        // camp->nProvas_realizadas++;
+            aux = aux->prox;
+        }
 
-        // corrida->nVoltas = r->nVoltas;
+        classFinal = OrdenaRankgeral(classFinal);
 
-        // corrida->prox = NULL;
+        printf("aqui");
+        rG = classFinal;
+        while (rG != NULL)
+        {
+            printf("id %d pontos: %f\n", rG->idpiloto, rG->pontuacao);
 
-        // while (corrida){
-        //     printf ("Voltas %d\n", corrida->nVoltas);
-
-        //     corrida = corrida->prox;
-        // }
-
-        // return;
-        // if (camp->corrida->prox == NULL)
-        // {
-        //     camp->corrida = corrida;
-        // }
-        // else
-        // {
-        //     aux = camp->corrida;
-
-        //     while (aux->prox != NULL)
-        //     {
-        //         aux = aux->prox;
-        //     }
-        //     aux->prox = corrida;
-        // }
-
-        // printf("Aqui");
-
-        // printf(" %d", lista->nProvas_realizadas);
-        // system("pause");
-        // for (int i = 0; i < lista->nProvas_realizadas; i++)
-        // {
-        //     mostra_ranking(lista->corrida[i].classificacao, lista->corrida[i].nVoltas);
-        // }
-        //mostra_ranking(lista->corrida->classificacao, lista->corrida->nVoltas);
+            rG = rG->prox;
+        }
 
         // Atribuir 10 pontos de exp ao campeao
-        if (camp->nProvas_realizadas == camp->nProvas)
+        if (lista.nProvas_realizadas == lista.nProvas)
         {
+            
             *champ = 0;
         }
+
         break;
 
     case 2:
         break;
     }
 
+    return lista;
     // printf("nVoltas %d", camp.corrida->classificacao->nVoltas);
     // camp.corrida->nVoltas = camp.corrida->classificacao->nVoltas;
 
@@ -179,7 +170,47 @@ void ChampionShip(Piloto *pilotos, Carro *carros, int totalPilotos, int totalCar
     //mostra_ranking_Volta(camp.corrida->classificacao);
 }
 
-int SaveCampeonato(char *nomeFich, Campeonato *lista)
+RankGeral *OrdenaRankgeral(RankGeral *lista)
+{
+
+    RankGeral  *aux, *novo = NULL;
+    int troca;
+
+   
+
+    do
+    {
+        troca = 0;
+        aux = lista;
+
+        while (aux->prox != novo)
+        {
+            if (aux->pontuacao > aux->prox->pontuacao)
+            {
+                swap(aux, aux->prox);
+                troca = 1;
+            }
+            aux = aux->prox;
+        }
+        novo = aux;
+    } while (troca);
+
+    return novo;
+}
+
+
+void swap(RankGeral *x, RankGeral *y)
+{
+    int tempid = x->idpiloto;
+    int tempPontos = x->pontuacao;
+    x->idpiloto = y->idpiloto;
+    x->pontuacao = y->pontuacao;
+
+    y->idpiloto = tempid;
+    y->pontuacao = tempPontos;
+}
+
+int SaveCampeonato(char *nomeFich, Campeonato lista)
 {
     Corredor *c;
     RankGeral *r;
@@ -194,12 +225,12 @@ int SaveCampeonato(char *nomeFich, Campeonato *lista)
     }
 
     // n de provas
-    fwrite(&lista->nProvas, sizeof(int), 1, f);
+    fwrite(&lista.nProvas, sizeof(int), 1, f);
 
     // n de provas realizadas
-    fwrite(&lista->nProvas_realizadas, sizeof(int), 1, f);
+    fwrite(&lista.nProvas_realizadas, sizeof(int), 1, f);
 
-    r = lista->rankingGeral;
+    r = lista.rankingGeral;
 
     while (r)
     {

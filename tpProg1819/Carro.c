@@ -92,7 +92,6 @@ void MostraCarros(Carro *carro, int tam)
 
     printf("+------+-----------+-----------+\n");
 
-    getchar();
 }
 
 int SaveCarros(Carro carros[], int tam)
